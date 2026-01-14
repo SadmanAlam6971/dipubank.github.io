@@ -1,4 +1,4 @@
-// CONFIGURATION
+
 const bankAddress = "0xe882a6128287565cb042b0c9ec29dee24ae650f9"; 
 const bankABI = [
     "function s_balances(address) view returns (uint256)",
@@ -12,13 +12,13 @@ window.onload = function() {
 };
 
 async function connectWallet() {
-    // 1. Check for MetaMask
+    
     if (typeof window.ethereum === 'undefined') {
         alert("MetaMask is NOT installed!");
         return;
     }
 
-    // 2. Check for Ethers Library (The fix for your error)
+    
     if (typeof ethers === 'undefined') {
         alert("CRITICAL: Ethers.js library failed to load. Refresh the page.");
         return;
