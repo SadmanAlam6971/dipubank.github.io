@@ -164,9 +164,14 @@
 <script>
     // --- 1. NAVIGATION LOGIC ---
     function showPage(pageId) {
+        // Hide all pages
         document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+        
+        // Show selected page
         document.getElementById(pageId).classList.add('active');
+        
+        // Update Title
         document.getElementById('pageTitle').innerText = pageId.toUpperCase();
     }
 
@@ -197,7 +202,6 @@
                 // Setup Contract
                 bankContract = new ethers.Contract(bankAddress, bankABI, signer);
                 updateData();
-                setInterval(updateData, 5000); // Live Updates
                 
             } catch (error) {
                 console.error(error);
