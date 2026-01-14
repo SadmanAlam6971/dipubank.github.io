@@ -9,357 +9,95 @@
     
     <style>
         :root {
-            --bg-dark: #050a10;
-            --panel-dark: #121820;
-            --card-dark: rgba(25, 35, 50, 0.7);
-            --neon-blue: #58a6ff;
-            --neon-green: #3fb950;
-            --neon-purple: #a371f7;
-            --text-light: #ffffff;
-            --text-muted: #8b949e;
-            --glow-blue: 0 0 15px rgba(88, 166, 255, 0.3);
+            --bg-dark: #050a10; --panel-dark: #121820; --card-dark: rgba(25, 35, 50, 0.7);
+            --neon-blue: #58a6ff; --neon-green: #3fb950; --neon-purple: #a371f7;
+            --text-light: #ffffff; --text-muted: #8b949e;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background-color: var(--bg-dark);
+            color: var(--text-light); font-family: 'Roboto', sans-serif;
+            height: 100vh; overflow: hidden;
             background-image: linear-gradient(rgba(88, 166, 255, 0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(88, 166, 255, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
-            color: var(--text-light);
-            font-family: 'Roboto', sans-serif;
-            height: 100vh;
-            overflow: hidden;
         }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            height: 100vh;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            background-color: var(--panel-dark);
-            border-right: 1px solid rgba(88, 166, 255, 0.2);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 5px 0 20px rgba(0,0,0,0.3);
-        }
-
-        .brand {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--neon-blue);
-            margin-bottom: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
-        }
-
-        .menu-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px;
-            color: var(--text-muted); text-decoration: none; border-radius: 10px;
-            margin-bottom: 10px; transition: 0.3s; font-family: 'Orbitron'; letter-spacing: 1px;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background: rgba(88, 166, 255, 0.1);
-            color: var(--neon-blue);
-            box-shadow: inset 0 0 15px rgba(88, 166, 255, 0.1);
-        }
+        .dashboard-container { display: grid; grid-template-columns: 250px 1fr; height: 100vh; }
         
-        .menu-item i { width: 20px; }
-
-        .pro-banner {
-            margin-top: auto; 
-            background: linear-gradient(135deg, rgba(88, 166, 255, 0.2), rgba(163, 113, 247, 0.2));
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid var(--neon-blue);
-            box-shadow: var(--glow-blue);
-        }
-        .pro-banner h3 { font-family: 'Orbitron'; margin-bottom: 5px; }
-        .pro-banner p { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; }
-        .btn-pro {
-            background: var(--neon-blue); color: var(--bg-dark); border: none; padding: 10px 20px;
-            border-radius: 20px; font-weight: bold; cursor: pointer; font-family: 'Orbitron';
-            transition: 0.3s;
-        }
-        .btn-pro:hover { box-shadow: 0 0 20px var(--neon-blue); color: white; }
-
-
-        /* --- MAIN CONTENT AREA --- */
-        .main-content {
-            padding: 30px;
-            overflow-y: auto; 
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .header h2 { font-family: 'Orbitron'; letter-spacing: 2px; }
-
-        .search-bar {
-            background: var(--card-dark);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 300px;
-        }
-        .search-bar input { background: transparent; border: none; color: white; outline: none; width: 100%; }
-        .search-bar i { color: var(--text-muted); }
-
-        .profile-actions { display: flex; align-items: center; gap: 20px; }
-        .icon-btn { 
-            background: var(--card-dark); border: 1px solid rgba(255,255,255,0.1);
-            width: 40px; height: 40px; border-radius: 50%; display: flex; 
-            justify-content: center; align-items: center; color: var(--text-muted); cursor: pointer;
-            position: relative;
-        }
-        .notification-dot {
-            position: absolute; top: 5px; right: 5px; width: 8px; height: 8px;
-            background: var(--neon-green); border-radius: 50%; box-shadow: 0 0 5px var(--neon-green);
-        }
-
-        /* --- STAT CARDS GRID --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--card-dark);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card:hover {
-            border-color: var(--neon-blue);
-            box-shadow: var(--glow-blue);
-            transform: translateY(-5px);
-        }
-        .stat-card::after {
-            content: ''; position: absolute; top: 0; right: 0; width: 30px; height: 30px;
-            background: linear-gradient(135deg, transparent 50%, rgba(88, 166, 255, 0.1) 50%);
-        }
-
-        .stat-head { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .stat-icon {
-            width: 40px; height: 40px; background: rgba(88, 166, 255, 0.1);
-            border-radius: 10px; display: flex; justify-content: center; align-items: center;
-            color: var(--neon-blue); font-size: 18px;
-        }
-        .stat-trend { font-size: 12px; color: var(--neon-green); display: flex; align-items: center; gap: 5px;}
-        .stat-trend.down { color: #ff4a4a; }
-
-        .stat-label { color: var(--text-muted); font-size: 14px; margin-bottom: 5px; font-family: 'Orbitron'; }
-        .stat-value { font-family: 'Orbitron'; font-size: 24px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
-
-
-        /* --- MIDDLE SECTION (Chart & Card) --- */
-        .middle-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr; 
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .chart-container, .credit-card-container {
-            background: var(--card-dark);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            min-height: 250px; 
-            display: flex;
-            flex-direction: column;
-        }
-
-        .section-title { font-family: 'Orbitron'; margin-bottom: 20px; display: flex; justify-content: space-between; }
-
-        /* Sci-Fi Credit Card */
-        .sci-fi-card {
-            background: linear-gradient(135deg, #1a1f2c, #0d1117);
-            border: 1px solid var(--neon-purple);
-            height: 180px; border-radius: 15px; padding: 25px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 20px rgba(163, 113, 247, 0.2);
-        }
-        .sci-fi-card::before {
-            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
-            background-image: repeating-linear-gradient(45deg, rgba(163, 113, 247, 0.05) 0px, transparent 2px);
-            background-size: 20px 20px;
-        }
-        .card-chip { width: 40px; height: 30px; background: linear-gradient(to bottom, #d29922, #8a620f); border-radius: 5px; }
-        .card-number { font-family: 'Orbitron'; font-size: 20px; letter-spacing: 2px; z-index: 1; }
-        .card-details { display: flex; justify-content: space-between; z-index: 1; font-family: 'Orbitron'; font-size: 12px; color: var(--text-muted); }
-        .card-details strong { display: block; color: white; font-size: 14px; }
-
-
-        /* --- BOTTOM SECTION (Activity) --- */
-        .activity-container {
-            background: var(--card-dark);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-        }
+        /* SIDEBAR */
+        .sidebar { background-color: var(--panel-dark); border-right: 1px solid rgba(88, 166, 255, 0.2); padding: 30px; display: flex; flex-direction: column; }
+        .brand { font-family: 'Orbitron'; font-size: 22px; color: var(--neon-blue); margin-bottom: 50px; }
+        .menu-item { display: flex; align-items: center; gap: 15px; padding: 15px; color: var(--text-muted); text-decoration: none; border-radius: 10px; margin-bottom: 10px; font-family: 'Orbitron'; }
+        .menu-item.active { background: rgba(88, 166, 255, 0.1); color: var(--neon-blue); }
+        .pro-banner { margin-top: auto; background: linear-gradient(135deg, rgba(88,166,255,0.2), rgba(163,113,247,0.2)); padding: 20px; border-radius: 15px; border: 1px solid var(--neon-blue); text-align: center; }
+        .btn-pro { background: var(--neon-blue); color: #000; border: none; padding: 10px; width: 100%; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Orbitron'; }
         
-        .activity-table { width: 100%; border-collapse: collapse; }
-        .activity-table th { text-align: left; color: var(--text-muted); padding: 15px 0; font-size: 12px; }
-        .activity-table td { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* MAIN */
+        .main-content { padding: 30px; overflow-y: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-dark); padding: 25px; border-radius: 15px; border: 1px solid rgba(88, 166, 255, 0.2); }
+        .stat-value { font-family: 'Orbitron'; font-size: 24px; font-weight: bold; margin-top: 10px; }
         
-        .user-info { display: flex; align-items: center; gap: 15px; }
-        .user-avatar { width: 40px; height: 40px; background: var(--panel-dark); border-radius: 50%; border: 2px solid var(--neon-blue); }
-        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .status-done { background: rgba(63, 185, 80, 0.2); color: var(--neon-green); }
-        .status-pending { background: rgba(210, 153, 34, 0.2); color: #d29922; }
-
+        .middle-section { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .chart-container { background: var(--card-dark); padding: 25px; border-radius: 15px; border: 1px solid rgba(88, 166, 255, 0.2); min-height: 250px; }
+        .sci-fi-card { background: linear-gradient(135deg, #1a1f2c, #0d1117); border: 1px solid var(--neon-purple); height: 100%; border-radius: 15px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <div class="sidebar">
-            <div class="brand">
-                <i class="fa-solid fa-cube"></i> DIPU NEXUS
-            </div>
-            <a href="#" class="menu-item active"><i class="fa-solid fa-grip"></i> Dashboard</a>
-            <a href="#" class="menu-item"><i class="fa-regular fa-credit-card"></i> My Cards</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transaction</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-money-bill-transfer"></i> Payment</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice"></i> Invoice</a>
-            <a href="#" class="menu-item" style="margin-top: auto;"><i class="fa-solid fa-gear"></i> Settings</a>
+<div class="dashboard-container">
+    <div class="sidebar">
+        <div class="brand"><i class="fa-solid fa-cube"></i> DIPU NEXUS</div>
+        <div class="menu-item active"><i class="fa-solid fa-grip"></i> Dashboard</div>
+        <div class="pro-banner">
+            <h3>STATUS</h3>
+            <p id="statusText">Not Connected</p>
+            <button class="btn-pro" onclick="connectWallet()">CONNECT WALLET</button>
+        </div>
+    </div>
 
-            <div class="pro-banner">
-                <h3>Upgrade to PRO</h3>
-                <p>Get increased staking limits.</p>
-                <button class="btn-pro" onclick="connectWallet()">CONNECT WALLET</button>
+    <div class="main-content">
+        <div class="header">
+            <h2 style="font-family:'Orbitron'">OVERVIEW</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div style="color:var(--text-muted)">Available Balance</div>
+                <div class="stat-value" id="stakedBalance" style="color:var(--neon-blue)">--</div>
+            </div>
+            <div class="stat-card">
+                <div style="color:var(--text-muted)">Earned Rewards</div>
+                <div class="stat-value" id="earnedReward" style="color:var(--neon-green)">--</div>
+            </div>
+            <div class="stat-card">
+                <div style="color:var(--text-muted)">Network Status</div>
+                <div class="stat-value" style="color:var(--neon-purple)">ONLINE</div>
+            </div>
+            <div class="stat-card">
+                <div style="color:var(--text-muted)">Global TVL</div>
+                <div class="stat-value">$8,125,000</div>
             </div>
         </div>
 
-        <div class="main-content">
-            <div class="header">
-                <h2>OVERVIEW</h2>
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search transactions...">
-                </div>
-                <div class="profile-actions">
-                    <div class="icon-btn"><i class="fa-regular fa-bell"></i><div class="notification-dot"></div></div>
-                    <div class="user-avatar" style="background-image: url('https://i.pravatar.cc/100'); background-size: cover;"></div>
-                </div>
+        <div class="middle-section">
+            <div class="chart-container">
+                <h3 style="font-family:'Orbitron'; margin-bottom:10px;">Live Hashrate</h3>
+                <canvas id="miningChart"></canvas>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-head">
-                        <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
-                        <div class="stat-trend"><i class="fa-solid fa-arrow-trend-up"></i> +2.5%</div>
-                    </div>
-                    <div class="stat-label">Available Balance</div>
-                    <div class="stat-value" id="stakedBalance">--</div>
-                </div>
-                <div class="stat-card" style="border-color: var(--neon-green);">
-                    <div class="stat-head">
-                        <div class="stat-icon" style="color: var(--neon-green); background: rgba(63, 185, 80, 0.1);"><i class="fa-solid fa-coins"></i></div>
-                        <div class="stat-trend"><i class="fa-solid fa-arrow-trend-up"></i> +12%</div>
-                    </div>
-                    <div class="stat-label">Earned Rewards</div>
-                    <div class="stat-value" style="color: var(--neon-green);" id="earnedReward">--</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-head">
-                        <div class="stat-icon" style="color: var(--neon-purple); background: rgba(163, 113, 247, 0.1);"><i class="fa-regular fa-circle-check"></i></div>
-                    </div>
-                    <div class="stat-label">Processed</div>
-                    <div class="stat-value">2,050,000</div>
-                </div>
-                 <div class="stat-card">
-                    <div class="stat-head">
-                        <div class="stat-icon"><i class="fa-solid fa-chart-pie"></i></div>
-                    </div>
-                    <div class="stat-label">Total Staked Globally</div>
-                    <div class="stat-value">$8,125,000</div>
-                </div>
+            <div class="sci-fi-card">
+                <div style="width:40px; height:30px; background:#d29922; border-radius:5px;"></div>
+                <div style="font-family:'Orbitron'; font-size:20px;">4558 2214 **** 9903</div>
+                <div style="font-family:'Orbitron'; font-size:12px; color:#888;">Dipu Khala</div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="middle-section">
-                <div class="chart-container">
-                    <div class="section-title">
-                        <span>Live Hashrate Mining</span>
-                        <select style="background: var(--bg-dark); color: white; border: 1px solid #333; padding: 5px; border-radius: 5px;"><option>Live</option></select>
-                    </div>
-                    <div style="flex-grow: 1; position: relative;">
-                        <canvas id="miningChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="credit-card-container">
-                    <div class="section-title"><span>Master Card</span></div>
-                    <div class="sci-fi-card">
-                        <div class="card-chip"></div>
-                        <div class="card-number">4558 2214 **** 9903</div>
-                        <div class="card-details">
-                            <div><span>Card Holder</span><strong>Dipu Khala</strong></div>
-                            <div><span>Expires</span><strong>09/28</strong></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="activity-container">
-                <div class="section-title"><span>Recent Activity</span><button style="background:none; border:none; color: var(--neon-blue);">See All</button></div>
-                <table class="activity-table">
-                    <thead>
-                        <tr><th>Customer</th><th>Date</th><th>Status</th><th>Amount</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="user-info"><div class="user-avatar" style="background-image: url('https://i.pravatar.cc/50?img=1');"></div><span>Esther Howard</span></div></td>
-                            <td style="color: var(--text-muted);">20 Jan, 2024</td>
-                            <td><span class="status-badge status-done">Done</span></td>
-                            <td style="font-family: 'Orbitron';">$1,200.00</td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-info"><div class="user-avatar" style="background-image: url('https://i.pravatar.cc/50?img=2');"></div><span>Guy Hawkins</span></div></td>
-                            <td style="color: var(--text-muted);">19 Jan, 2024</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td style="font-family: 'Orbitron';">$850.50</td>
-                        </tr>
-                         <tr>
-                            <td><div class="user-info"><div class="user-avatar" style="background-image: url('https://i.pravatar.cc/50?img=3');"></div><span>Robert Fox</span></div></td>
-                            <td style="color: var(--text-muted);">18 Jan, 2024</td>
-                            <td><span class="status-badge status-done">Done</span></td>
-                            <td style="font-family: 'Orbitron';">$2,300.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div> </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
