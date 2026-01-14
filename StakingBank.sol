@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -8,7 +8,7 @@ contract DipuStaking is ReentrancyGuard {
     IERC20 public s_stakingToken;
     IERC20 public s_rewardToken;
 
-    // Reward Rate: 100 tokens per second (High interest for testing!)
+    
     uint256 public constant REWARD_RATE = 100; 
     uint256 public s_totalSupply;
     uint256 public s_lastUpdateTime;
@@ -75,4 +75,5 @@ contract DipuStaking is ReentrancyGuard {
             emit RewardsClaimed(msg.sender, reward);
         }
     }
+
 }
